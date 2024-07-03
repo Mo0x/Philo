@@ -1,14 +1,17 @@
 NAME = philo
 CC = gcc 
 SRCS = ./srcs/main.c \
-		./srcs/alloc.c \
 		./srcs/error.c \
-		./srcs/list.c \
-		./srcs/utils.c \
-		./srcs/parser.c
+		./srcs/utils0.c \
+		./srcs/utils1.c \
+		./srcs/parser.c \
+		./srcs/init.c	\
+		./srcs/thread.c \
+		./srcs/watcher.c \
+		./srcs/think_eat_sleep.c
 OBJS = $(patsubst %.c, %.o, $(SRCS))
 INCDIRS = ./includes
-CFLAGS = -Wall -Wextra -Werror -I$(INCDIRS) -g3
+CFLAGS = -Wall -Wextra -Werror -I$(INCDIRS) -g3 -pthread
 
 all : $(NAME)
 

@@ -6,43 +6,48 @@
 /*   By: mgovinda <mgovinda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 18:15:44 by mgovinda          #+#    #+#             */
-/*   Updated: 2024/06/18 15:16:21 by mgovinda         ###   ########.fr       */
+/*   Updated: 2024/07/03 16:30:07 by mgovinda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include <unistd.h>
-# include <string.h>
+# include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/time.h>
-# include <pthread.h>
+# include <unistd.h>
 # include "typedef.h"
 
-/*alloc*/
-void	*alloc(int size, void *ptr, int type);
-void	*walloc(int size);
-void	wfree(void *ptr);
-void	wclear(void);
-
-/*list*/
-t_list	*create_node(void *data);
-void 	lst_addback(t_list *parent, t_list *new);
-int		lst_del_one(t_list **head, t_list *to_del);
-void	clear_alloc(t_list **head);
-
 /*utils*/
-int	ft_strlen(char *s);
-int	ft_atoi_overflow(const char *str, int *error);
+int				ft_strlen(char *s);
+int				ft_atoi_overflow(const char *str, int *error);
+size_t			give_me_time(void);
+void			wwrite(char *s, t_philo *philo);
+int				ft_freed_from_desire(char *s, t_args *args, t_philo_room *room,
+					pthread_mutex_t *forks);
+int				ft_time_out(size_t ms);
 
 /*error*/
-void ft_error_argc(void);
-void	ft_eq(char *msg);
+int				ft_error_argc(void);
+int				ft_eq(char *msg);
 
 /*parser*/
-t_args	*init_t_args(void);
-void	ft_parser(int argc, char **argv, t_args *args);
+t_args			*init_t_args(void);
+int				ft_parser(int argc, char **argv, t_args *args);
+
+/*init*/
+t_philo_room	*ft_init(pthread_mutex_t **forks, t_args *args);
+
+/*routines*/
+void			ft_think(t_philo *philo);
+void			ft_sleep(t_philo *philo);
+int				ft_eat(t_philo *philo);
+int				not_dead_yet(t_philo *philo);
+int				ft_do_the_thread_thing(t_philo_room *room,
+					pthread_mutex_t *forks, t_args *args);
+void			*do_the_watch_thing(void *philo_holder);
 
 #endif
